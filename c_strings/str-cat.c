@@ -1,4 +1,15 @@
 #include "c_strings.h"
+#include <unistd.h>
+
+/**
+*concatstr - A function that concatenate unknown length/size of
+*two strings.
+*
+*@str1: a string
+*@str2: another string
+*
+*Return: pointer to str.
+*/
 
 char *concatstr(char *str1, char *str2)
 {
@@ -17,7 +28,7 @@ char *concatstr(char *str1, char *str2)
 
 	if (str == NULL)
 	{
-		printf("Memory not allocated.\n");
+		write(1, "Memory not allocated.\n", 22);
 		exit(0);
 	}
 	else
