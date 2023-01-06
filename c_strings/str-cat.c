@@ -54,11 +54,23 @@ char *concatstr(char *str1, char *str2)
 buff bdecorder(const char *buffer)
 	{
 		buff temp;
-		unsigned int i, j = 0, k;
+		unsigned int c = 0, i = 0, j = 0, k;
 		float data;
 		unsigned short index;
 		char indexstr[3];
-	
+		
+		while(*(buffer + i) != '\0')
+		{
+			if(*(buffer + i) == '%')
+				c++;
+			i++;
+		}	
+		
+		if (c != 1)
+		{
+			write(1, "buffer type not supported.\n", 27);
+			exit(0);
+		}
 		for (i = 0; *(buffer + i) != '%'; i++)
 			*(indexstr + i) = *(buffer + i);
 
@@ -89,7 +101,6 @@ buff bdecorder(const char *buffer)
 		return (temp);
 	}
 
-char *test = "34%887.78";
 buff buf;
 
 void runComm(char *string)
