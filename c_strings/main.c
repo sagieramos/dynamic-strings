@@ -5,7 +5,7 @@ int main(int argc, char* argv[])
 	{
 		for(int i = 1; i < argc; i++){	
 		runComm(argv[i]);
-		printf("\tvalue: %.2f\tindex: %d\n", buf.value, buf.index);
+		printf("\tindex: %d\tvalue: %.2f\n", buf.index, buf.value);
 		}
 		return 0;
 	}
