@@ -54,47 +54,35 @@ char *concatstr(char *str1, char *str2)
 buftable bdecorder(const char *buffer)
 	{
 		buftable temp = {0};
-		unsigned int c = 0, i = 0, j = 0, k;
-		float data;
-		unsigned short index;
-		char indexstr[3];
+		unsigned int i = 0, j = 0, k;
 
-		while (*(buffer + i) != '\0')
-		{
-			if (*(buffer + i) == '%')
-				c++;
+		while (buffer[i] != '%')
 			i++;
-		}
-		if (c != 1)
-		{
-			write(1, "buffer type not supported.\n", 27);
-			return (temp);
-		}
-		for (i = 0; *(buffer + i) != '%'; i++)
-			*(indexstr + i) = *(buffer + i);
-		while (*(buffer + i + j) != '\0')
-			j++;
-		char *datastr = (char *)malloc(j);
 
-		if (datastr == NULL)
-		{
-			write(1, "Memory not allocated.\n", 22);
-			exit(0);
-		}
+		while (buffer[i + j] != '\0')
+			j++;
+		char datastr[j];
+
 		for (k = 0; k < j; k++)
-			*(datastr + k) = *(buffer + k + i + 1);
-		*(datastr + j - 1) = '\0';
-		data = atof(datastr);
-		index = atoi(indexstr);
-		free(datastr);
-		temp.value = data;
-		temp.index = index;
+			datastr[k] = buffer[k + i + 1];
+
+		datastr[j - 1] = '\0';
+		temp.index = strtol(buffer, NULL, 10);
+		temp.value = strtod(datastr, NULL);
 
 		return (temp);
 	}
+
 /**
 *bufdec - Buffer Decoder.
+*Alowable format foo%bar.
+*
+*@string: buffer text.
+*@self: pointer to a struct.
+*
+*return: terminate function.
 */
+
 void bufdec(char *string, buftable *self)
 {
 	int i = 0, j = 0;
@@ -106,6 +94,8 @@ void bufdec(char *string, buftable *self)
 		i++;
 	}
 	if (j != 1)
+		return;
+	if (string[0] == '%' || string[i - 1] == '%')
 		return;
 	*self = bdecorder(string);
 }
