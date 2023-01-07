@@ -52,26 +52,26 @@ char *concatstr(char *str1, char *str2)
 }
 
 buftable bdecorder(const char *buffer)
-	{
-		buftable temp = {0};
-		unsigned int i = 0, j = 0, k;
+{
+	buftable temp = {0};
+	unsigned int i = 0, j = 0, k;
 
-		while (buffer[i] != '%')
-			i++;
+	while (buffer[i] != '%')
+		i++;
 
-		while (buffer[i + j] != '\0')
-			j++;
-		char datastr[j];
+	while (buffer[i + j] != '\0')
+		j++;
+	char datastr[j];
 
-		for (k = 0; k < j; k++)
-			datastr[k] = buffer[k + i + 1];
+	for (k = 0; k < j; k++)
+		datastr[k] = buffer[k + i + 1];
 
-		datastr[j - 1] = '\0';
-		temp.index = strtol(buffer, NULL, 10);
-		temp.value = strtod(datastr, NULL);
+	datastr[j - 1] = '\0';
+	temp.index = strtol(buffer, NULL, 10);
+	temp.value = strtod(datastr, NULL);
 
-		return (temp);
-	}
+	return (temp);
+}
 
 /**
 *bufdec - Buffer Decoder.
