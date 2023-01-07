@@ -51,59 +51,61 @@ char *concatstr(char *str1, char *str2)
 	return (str);
 }
 
-buff bdecorder(const char *buffer)
+buftable bdecorder(const char *buffer)
 	{
-		buff temp;
+		buftable temp = {0};
 		unsigned int c = 0, i = 0, j = 0, k;
 		float data;
 		unsigned short index;
 		char indexstr[3];
-		
-		while(*(buffer + i) != '\0')
+
+		while (*(buffer + i) != '\0')
 		{
-			if(*(buffer + i) == '%')
+			if (*(buffer + i) == '%')
 				c++;
 			i++;
-		}	
-		
+		}
 		if (c != 1)
 		{
 			write(1, "buffer type not supported.\n", 27);
-			exit(0);
+			return (temp);
 		}
 		for (i = 0; *(buffer + i) != '%'; i++)
 			*(indexstr + i) = *(buffer + i);
-
-		while(*(buffer + i + j) != '\0')
+		while (*(buffer + i + j) != '\0')
 			j++;
-
 		char *datastr = (char *)malloc(j);
-		
+
 		if (datastr == NULL)
 		{
 			write(1, "Memory not allocated.\n", 22);
 			exit(0);
 		}
-	
-		for(k = 0; k < j; k++)
+		for (k = 0; k < j; k++)
 			*(datastr + k) = *(buffer + k + i + 1);
-
 		*(datastr + j - 1) = '\0';
-
 		data = atof(datastr);
 		index = atoi(indexstr);
-		
 		free(datastr);
-
 		temp.value = data;
 		temp.index = index;
-		
+
 		return (temp);
 	}
-
-buff buf;
-
-void runComm(char *string)
+/**
+*bufdec - Buffer Decoder.
+*/
+void bufdec(char *string, buftable *self)
 {
-	buf = bdecorder(string);
+	int i = 0, j = 0;
+
+	while (string[i] != '\0')
+	{
+		if (string[i] == '%')
+			j++;
+		i++;
+	}
+	if (j != 1)
+		return;
+	*self = bdecorder(string);
 }

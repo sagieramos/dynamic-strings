@@ -1,15 +1,14 @@
 #ifndef _c_strings_
 #define _c_strings_
 
-typedef struct buff
+typedef struct buftable
 	{
 		float value;
 		int index;
-	}buff;
+	}buftable;
 
-extern buff buf;
-buff bdecorder(const char *buffer);
-void runComm(char *string);
+buftable bdecorder(const char *buffer);
+void bufdec(char *string, buftable *self);
 char *concatstr(char *str1, char *str2);
 
 #endif
